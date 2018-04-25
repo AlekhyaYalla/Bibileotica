@@ -1,15 +1,13 @@
 package com.tw.biblioteca.dal;
 
+import com.tw.biblioteca.dal.tables.BookConstants;
 import com.tw.biblioteca.model.Book;
 import org.jooq.DSLContext;
-import org.jooq.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.jooq.impl.DSL.table;
 
 @Transactional
 @Repository
@@ -24,8 +22,8 @@ public class BookRepository {
 
 
     public List<Book> getAllBooks() {
-        return dsl.selectFrom(table("book"))
-                .fetch()
-                .into(Book.class);
+        return dsl.select()
+                .from(BookConstants.BOOK_TABLE)
+                .fetchInto(Book.class);
     }
 }
