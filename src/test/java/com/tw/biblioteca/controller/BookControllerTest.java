@@ -13,13 +13,14 @@ public class BookControllerTest {
     @Mock
     private BookService bookService;
 
+
     @Test
     public void shouldCallGetAllBooksInBookService() {
         BookController bookController = new BookController(bookService);
-
         bookController.getAllBooks();
 
         verify(bookService).getAllBooks();
     }
+
 
 }

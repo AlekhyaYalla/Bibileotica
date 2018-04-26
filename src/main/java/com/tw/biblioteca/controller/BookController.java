@@ -1,9 +1,9 @@
 package com.tw.biblioteca.controller;
 
+import com.tw.biblioteca.exception.Errors;
 import com.tw.biblioteca.model.Book;
 import com.tw.biblioteca.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,12 +15,15 @@ public class BookController {
     private BookService bookService;
 
     @Autowired
-    public BookController(BookService bookService){
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
-    @RequestMapping(value = "/allBooks", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/allBooks", method = RequestMethod.GET)
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
+
+
+
 }

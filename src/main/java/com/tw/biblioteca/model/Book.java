@@ -7,13 +7,15 @@ public class Book {
     private String author;
     private String publish_year;
     private String isbn;
+    private Integer count;
 
-    public Book(String id, String title, String author, String publish_year, String isbn) {
+    public Book(String id, String title, String author, String publish_year, String isbn, Integer count) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publish_year = publish_year;
         this.isbn = isbn;
+        this.count = count;
     }
 
     public String getId() {
@@ -36,6 +38,10 @@ public class Book {
         return isbn;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -54,5 +60,9 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

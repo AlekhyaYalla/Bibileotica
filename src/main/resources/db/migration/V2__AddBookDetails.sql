@@ -2,6 +2,7 @@ ALTER TABLE book ADD author VARCHAR(100);
 ALTER TABLE book ADD publish_year VARCHAR(50);
 ALTER TABLE book ADD isbn VARCHAR(100);
 
+
 UPDATE book
   SET author = 'J. K. Rowling',
       publish_year = '2001',
@@ -19,7 +20,6 @@ UPDATE book
       publish_year = '2005',
       isbn = '978-3-16-148410-2'
   WHERE id = '347874c0-3e2d-11e8-b566-0800200c9a66';
-
 
 UPDATE book
   SET author = 'J. K. Rowling',
