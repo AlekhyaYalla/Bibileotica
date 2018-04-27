@@ -2,8 +2,10 @@ package com.tw.biblioteca.service;
 
 import com.tw.biblioteca.dal.BookRepository;
 import com.tw.biblioteca.dal.CheckoutRepository;
+import com.tw.biblioteca.exception.BookAlreadyReturned;
 import com.tw.biblioteca.exception.BookNotAvailableException;
 import com.tw.biblioteca.exception.BookNotFoundException;
+import com.tw.biblioteca.exception.NoCheckOutAvailable;
 import com.tw.biblioteca.model.Book;
 import com.tw.biblioteca.model.Checkout;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,21 @@ public class CheckoutService {
     }
 
     private Boolean isBookInStock(Book book) {
-        return book.getCount() - checkoutRepository.getBookRecordCount(book.getId()) > 0;
+        return book.getCount() - checkoutRepository.getBookRecordsCount(book.getId()) > 0;
     }
 
 
+    public void returnCheckoutBook(String checkoutId,String bookId) throws Exception {
+        Checkout checkoutRecord = checkoutRepository.getCheckoutRecord(checkoutId);
+        if (checkoutRecord == null)
+            throw new NoCheckOutAvailable("No Checkout record found");
+        if( !isBookValidAndReturnAvailableForCheckout(checkoutRecord, bookId))
+            throw new BookAlreadyReturned("Book Already returned");
+        checkoutRepository.updateDateOfReturnInCheckout(checkoutId);
+    }
+
+
+    public Boolean isBookValidAndReturnAvailableForCheckout(Checkout checkoutRecord, String bookId) {
+        return checkoutRecord.getDate_of_return() == null && checkoutRecord.getBook_id().equals(bookId);
+    }
 }

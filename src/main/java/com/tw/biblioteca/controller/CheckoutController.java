@@ -19,7 +19,15 @@ public class CheckoutController {
     }
 
     @RequestMapping(value = "book/{bookId}/checkout", method = RequestMethod.POST)
-    public void insertCheckoutRecord(@PathVariable String bookId) throws BookNotFoundException, BookNotAvailableException {
+    public String insertCheckoutRecord(@PathVariable String bookId) throws BookNotFoundException, BookNotAvailableException {
         checkoutService.insertCheckoutRecord(bookId);
+        return "Your Checkout Successful :)";
+    }
+
+
+    @RequestMapping(value = "book/{bookId}/checkout/{checkoutId}/", method = RequestMethod.POST)
+    public String returnCheckoutBook(@PathVariable String checkoutId,@PathVariable String bookId) throws Exception {
+        checkoutService.returnCheckoutBook(checkoutId,bookId);
+        return "Return of your book successful";
     }
 }

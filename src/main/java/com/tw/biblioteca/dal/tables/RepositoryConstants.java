@@ -7,7 +7,8 @@ import org.jooq.impl.DSL;
 public class RepositoryConstants {
     public static final Table BOOK_TABLE = DSL.table("book");
     public static final Field BOOK_ID = DSL.field("id");
-    public static final Field CHECKOUT_BOOK_ID = DSL.field("book_id");
     public static final Table CHECKOUT_TABLE = DSL.table("checkout");
-
+    public static final Field CHECKOUT_ID = DSL.field("id");
+    public static final Field CHECKOUT_BOOK_ID = DSL.field("book_id");
+    public static final Field CHECKOUT_DATE_OF_RETURN = DSL.field("date_of_return");
 }

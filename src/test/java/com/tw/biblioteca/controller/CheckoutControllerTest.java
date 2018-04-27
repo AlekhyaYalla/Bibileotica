@@ -26,4 +26,14 @@ public class CheckoutControllerTest {
         verify(checkoutService).insertCheckoutRecord(id);
     }
 
+    @Test
+    public void shouldReturnCheckoutBook() throws Exception {
+        CheckoutController checkoutController = new CheckoutController(checkoutService);
+        String checkout = "7c8f1879-61ed-4aa5-a903-d27b1faa994b";
+        checkoutController.returnCheckoutBook(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
+        verify(checkoutService).returnCheckoutBook(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
+
+
+    }
+
 }

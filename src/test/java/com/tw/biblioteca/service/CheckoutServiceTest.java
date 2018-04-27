@@ -13,7 +13,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.sql.Timestamp;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -40,7 +44,7 @@ public class CheckoutServiceTest {
 
         Checkout checkout = new Checkout(book);
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, bookRepository);
-        checkoutService.insertCheckoutRecord("b79f228c");
+        checkoutService.insertCheckoutRecord(book.getId());
 
         verify(checkoutRepository).insertCheckoutRecord(checkOutArgumentCaptor.capture());
         assertThat(checkout.getBook_id()).isEqualTo("3245dfe6-b382-400a-a255-5dc7ba98987b");
@@ -51,7 +55,7 @@ public class CheckoutServiceTest {
         Book book = new Book("3245dfe6-b382-400a-a255-5dc7ba98987b",
                 "Socerers stone", "J K Rowling",
                 "2000", "978-3-16-148410-0", 2);
-        verify(checkoutRepository).getBookRecordCount(book.getId());
+        verify(checkoutRepository).getBookRecordsCount(book.getId());
 
 
     }
@@ -67,9 +71,53 @@ public class CheckoutServiceTest {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, bookRepository);
         Book book = new Book("1234", "title", "author", "123", "isbn", 3);
         when(bookRepository.getBook(any())).thenReturn(book);
-        when(checkoutRepository.getBookRecordCount(book.getId())).thenReturn(3);
+        when(checkoutRepository.getBookRecordsCount(book.getId())).thenReturn(3);
         checkoutService.insertCheckoutRecord("1234");
     }
 
+    @Test
+    public void shouldReturnCheckoutBook() throws Exception {
+        CheckoutService checkoutService = new CheckoutService(checkoutRepository, bookRepository);
+        String checkout = "7c8f1879-61ed-4aa5-a903-d27b1faa994b";
+        checkoutService.returnCheckoutBook(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
+        verify(checkoutRepository).updateDateOfReturnInCheckout(checkout);
+    }
+
+
+    @Test
+    public void shouldReturnFalseForIsReturnAvailableForCheckout(){
+        CheckoutService checkoutService = new CheckoutService(checkoutRepository, bookRepository);
+        Checkout checkout = new Checkout("7c8f1879-61ed-4aa5-a903-d27b1faa994b","20b5dcc0-3e2d-11e8-b566-0800200c9a66",
+                new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
+        assertFalse(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getBook_id()));
+
+    }
+
+    @Test
+    public void shouldReturnTrueForDateOfReturnNull(){
+        CheckoutService checkoutService = new CheckoutService(checkoutRepository, bookRepository);
+        Checkout checkout = new Checkout("b4f8f773-8aaa-43d6-bcb3-16f0ddd2d8f3","20b5dcc0-3e2d-11e8-b566-0800200c9a66",
+                new Timestamp(System.currentTimeMillis()),null);
+        assertTrue(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getBook_id()));
+
+    }
+
+    @Test
+    public void shouldReturnFalseForInvalidBook(){
+        CheckoutService checkoutService = new CheckoutService(checkoutRepository, bookRepository);
+        Checkout checkout = new Checkout("7c8f1879-61ed-4aa5-a903-d27b1faa994b","20b5dcc0-3e2d-11e8-b566-0800200c9a66",
+                new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
+        assertFalse(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, "12345"));
+
+    }
+
+    @Test
+    public void shouldReturnTrueForValidBookAndDateOfReturnNull(){
+        CheckoutService checkoutService = new CheckoutService(checkoutRepository, bookRepository);
+        Checkout checkout = new Checkout("7c8f1879-61ed-4aa5-a903-d27b1faa994b","20b5dcc0-3e2d-11e8-b566-0800200c9a66",
+                new Timestamp(System.currentTimeMillis()),null);
+        assertTrue(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getBook_id()));
+
+    }
 
 }
