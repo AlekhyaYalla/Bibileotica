@@ -20,4 +20,8 @@ public class BookService {
     public List<Book> getAllBooks() {
         return bookRepository.getAllBooks();
     }
+
+    public Book getBookForCheckout(String id){
+        return bookRepository.getBook(id);
+    }
 }
