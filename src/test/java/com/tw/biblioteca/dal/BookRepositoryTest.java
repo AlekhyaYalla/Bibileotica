@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @Transactional
@@ -45,6 +46,18 @@ public class BookRepositoryTest {
 
         when(bookRepository.getBook(book.getId())).thenReturn(book);
         assertThat(bookRepository.getBook(book.getId())).isEqualTo(book);
+    }
+
+    @Test
+    public void shouldInsertBook() {
+        Book book = new Book("9333f964-0dd3-49d6-8856-2ead194e9eb2",
+                "Classical Mythology", "Mark P. O. Morford",
+                "2002", "195153448", 1);
+
+        int previousSize = bookRepository.getAllBooks().size();
+        bookRepository.insertBook(book);
+       assertEquals(previousSize+1,bookRepository.getAllBooks().size());
+
     }
 
 }

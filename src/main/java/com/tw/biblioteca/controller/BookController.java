@@ -4,9 +4,7 @@ import com.tw.biblioteca.exception.Errors;
 import com.tw.biblioteca.model.Book;
 import com.tw.biblioteca.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +22,9 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
-
-
+    @ResponseBody
+    @RequestMapping(value = "/book/insert", method = RequestMethod.POST)
+    public void insertBooks(@RequestBody String rawBooksData) {
+        bookService.insertBooks(rawBooksData);
+    }
 }

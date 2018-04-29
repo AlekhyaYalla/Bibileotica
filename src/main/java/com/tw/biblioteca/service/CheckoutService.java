@@ -40,9 +40,7 @@ public class CheckoutService {
 
     public void returnCheckoutBook(String checkoutId,String bookId) throws Exception {
         Checkout checkoutRecord = checkoutRepository.getCheckoutRecord(checkoutId);
-        if (checkoutRecord == null)
-            throw new NoCheckOutAvailable("No Checkout record found");
-        if( !isBookValidAndReturnAvailableForCheckout(checkoutRecord, bookId))
+        if( checkoutRecord == null || !isBookValidAndReturnAvailableForCheckout(checkoutRecord, bookId))
             throw new BookAlreadyReturned("Book Already returned");
         checkoutRepository.updateDateOfReturnInCheckout(checkoutId);
     }

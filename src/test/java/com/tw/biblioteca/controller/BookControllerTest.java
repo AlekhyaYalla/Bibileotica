@@ -22,5 +22,15 @@ public class BookControllerTest {
         verify(bookService).getAllBooks();
     }
 
+    @Test
+    public void shouldCallInsetBookInService(){
+        BookController bookController = new BookController(bookService);
+        String rawData = "195153448,Classical Mythology,Mark P. O. Morford,2002,Oxford University Press\n" +
+                "2005018,Clara Callan,Richard Bruce Wright,2001,HarperFlamingo Canada";
+        bookController.insertBooks(rawData);
+
+        verify(bookService).insertBooks(rawData);
+    }
+
 
 }
