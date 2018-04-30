@@ -5,18 +5,18 @@ import java.util.UUID;
 
 public class Checkout {
     private String id;
-    private String book_id;
+    private String item_id;
     private Timestamp date_of_issue;
     private Timestamp date_of_return;
 
-    public Checkout(Book book) {
-        this.book_id = book.getId();
+    public Checkout(Item item) {
+        this.item_id = item.getId();
         this.id = UUID.randomUUID().toString();
     }
 
-    public Checkout(String id, String book_id, Timestamp date_of_issue, Timestamp date_of_return) {
+    public Checkout(String id, String item_id, Timestamp date_of_issue, Timestamp date_of_return) {
         this.id = id;
-        this.book_id = book_id;
+        this.item_id = item_id;
         this.date_of_issue = date_of_issue;
         this.date_of_return = date_of_return;
     }
@@ -25,8 +25,8 @@ public class Checkout {
         return id;
     }
 
-    public String getBook_id() {
-        return book_id;
+    public String getItem_id() {
+        return item_id;
     }
 
     public Timestamp getDate_of_issue() {
@@ -41,8 +41,8 @@ public class Checkout {
         this.id = id;
     }
 
-    public void setBook_id(String book_id) {
-        this.book_id = book_id;
+    public void setItem_id(String book_id) {
+        this.item_id = book_id;
     }
 
     public void setDate_of_issue(Timestamp date_of_issue) {

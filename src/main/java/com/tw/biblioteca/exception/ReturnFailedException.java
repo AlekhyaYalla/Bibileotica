@@ -1,8 +1,8 @@
 package com.tw.biblioteca.exception;
 
-public class BookAlreadyReturned extends Exception {
+public class ReturnFailedException extends Exception {
     private String message;
-    public BookAlreadyReturned(String message) {
+    public ReturnFailedException(String message) {
         this.message  = message;
     }
 }

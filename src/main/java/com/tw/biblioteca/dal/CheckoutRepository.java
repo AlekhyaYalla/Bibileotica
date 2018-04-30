@@ -26,9 +26,9 @@ public class CheckoutRepository {
 
     public void insertCheckoutRecord(Checkout checkout) {
         dsl.insertInto(RepositoryConstants.CHECKOUT_TABLE,
-                DSL.field("id"),
-                DSL.field("book_id"))
-                .values(checkout.getId(), checkout.getBook_id())
+                RepositoryConstants.CHECKOUT_ID,
+                RepositoryConstants.CHECKOUT_ITEM_ID)
+                .values(checkout.getId(), checkout.getItem_id())
                 .execute();
 
     }
@@ -39,15 +39,15 @@ public class CheckoutRepository {
                 .fetchInto(Checkout.class);
     }
 
-    public Integer getBookRecordsCount(String bookId) {
+    public Integer getItemRecordsCount(String itemId) {
         return dsl.select()
                 .from(RepositoryConstants.CHECKOUT_TABLE)
-                .where(RepositoryConstants.CHECKOUT_BOOK_ID.eq(bookId))
+                .where(RepositoryConstants.CHECKOUT_ITEM_ID.eq(itemId))
                 .and(RepositoryConstants.CHECKOUT_DATE_OF_RETURN.isNull())
                 .fetchInto(Checkout.class).size();
     }
 
-    public void updateDateOfReturnInCheckout(String checkoutId) {
+    /*public void updateDateOfReturnInCheckout(String checkoutId) {
         dsl.update(RepositoryConstants.CHECKOUT_TABLE)
                 .set(RepositoryConstants.CHECKOUT_DATE_OF_RETURN,new Timestamp(System.currentTimeMillis()))
                 .where(RepositoryConstants.CHECKOUT_ID.eq(checkoutId))
@@ -61,5 +61,5 @@ public class CheckoutRepository {
                 .fetchOne();
         return (record == null) ?  null :  record.into(Checkout.class);
     }
-
+*/
 }

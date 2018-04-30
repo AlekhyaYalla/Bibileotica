@@ -12,7 +12,7 @@ import java.util.Arrays;
 @ControllerAdvice
 public class ApplicationExceptionHandler {
 
-    @ExceptionHandler(value = {BookNotFoundException.class})
+   /* @ExceptionHandler(value = {BookNotFoundException.class})
     public ResponseEntity<Errors> handleBookNotFoundException(HttpServletRequest httpServletRequest, Exception ex) {
         ApplicationError appError = new ApplicationError(
                 ExceptionConstants.STATUS_414,
@@ -28,6 +28,15 @@ public class ApplicationExceptionHandler {
                 ExceptionConstants.STATUS_422_CODE);
         Errors errors = new Errors(Arrays.asList(appError));
         return new ResponseEntity<>(errors,HttpStatus.UNPROCESSABLE_ENTITY);
+    }*/
+
+    @ExceptionHandler(value = {ReturnFailedException.class})
+    public ResponseEntity<Errors> handleBookAlreadyReturnedException(HttpServletRequest httpServletRequest, Exception ex) {
+        ApplicationError appError = new ApplicationError(
+                ExceptionConstants.STATUS_404,
+                "Return failed for the book");
+        Errors errors = new Errors(Arrays.asList(appError));
+        return new ResponseEntity<>(errors,HttpStatus.NOT_ACCEPTABLE);
     }
 
 

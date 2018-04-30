@@ -28,27 +28,14 @@ public class CheckoutRepositoryTest {
 
     @Test
     public void shouldReturnInsertedCheckoutRecord() {
-        assertEquals(checkoutRepository.getAllCheckouts().size(),7);
+        assertEquals(checkoutRepository.getAllCheckouts().size(),1);
     }
 
-    @Test
-    public void shouldReturnCheckoutsCount(){
-        assertEquals(checkoutRepository.getAllCheckouts().size(),7);
-    }
 
     @Test
     public void shouldReturnCountOfBookRecords(){
-        assertThat(checkoutRepository.getBookRecordsCount("20b5dcc0-3e2d-11e8-b566-0800200c9a66")).isEqualTo(4);
+        assertThat(checkoutRepository.getItemRecordsCount("20b5dcc0-3e2d-11e8-b566-0800200c9a66")).isEqualTo(4);
     }
 
-    @Test
-    public void shouldUpdateDateOfReturnInCheckoutWithCurrentDateAndTime(){
-
-        String checkoutId = "7c8f1879-61ed-4aa5-a903-d27b1faa994b";
-        checkoutRepository.updateDateOfReturnInCheckout(checkoutId);
-        Checkout updatedCheckout = checkoutRepository.getCheckoutRecord(checkoutId);
-        assertThat(updatedCheckout.getDate_of_return()).isNotNull();
-
-    }
 
 }
