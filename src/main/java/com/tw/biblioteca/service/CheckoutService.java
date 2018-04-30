@@ -4,6 +4,7 @@ import com.tw.biblioteca.dal.ItemRepository;
 import com.tw.biblioteca.dal.CheckoutRepository;
 import com.tw.biblioteca.exception.ItemNotAvailableException;
 import com.tw.biblioteca.exception.ItemNotFoundException;
+import com.tw.biblioteca.exception.ReturnFailedException;
 import com.tw.biblioteca.model.Checkout;
 import com.tw.biblioteca.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,20 +39,19 @@ public class CheckoutService {
     }
 
 
-  /*  public void returnCheckoutBook(String checkoutId,String bookId) throws Exception {
-        Checkout checkoutRecord = checkoutRepository.getCheckoutRecord(checkoutId);
-        if( checkoutRecord == null || !isBookValidAndReturnAvailableForCheckout(checkoutRecord, bookId))
-            throw new ReturnFailedException("Return of Book failed");
-        checkoutRepository.updateDateOfReturnInCheckout(checkoutId);
-    }
-
-*/
-    public Boolean isBookValidAndReturnAvailableForCheckout(Checkout checkoutRecord, String itemId) {
+   public Boolean isBookValidAndReturnAvailableForCheckout(Checkout checkoutRecord, String itemId) {
         return checkoutRecord.getDate_of_return() == null && checkoutRecord.getItem_id().equals(itemId);
     }
 
     public List<Checkout> getAllCheckouts() {
 
         return checkoutRepository.getAllCheckouts();
+    }
+
+    public void returnCheckoutItem(String checkoutId, String itemId) throws ReturnFailedException {
+        Checkout checkoutRecord = checkoutRepository.getCheckoutRecord(checkoutId);
+        if( checkoutRecord == null || !isBookValidAndReturnAvailableForCheckout(checkoutRecord, itemId))
+            throw new ReturnFailedException("Return of Book failed");
+        checkoutRepository.updateDateOfReturnInCheckout(checkoutId);
     }
 }

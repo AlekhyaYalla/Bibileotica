@@ -4,6 +4,7 @@ import com.tw.biblioteca.dal.CheckoutRepository;
 import com.tw.biblioteca.dal.ItemRepository;
 import com.tw.biblioteca.exception.ItemNotAvailableException;
 import com.tw.biblioteca.exception.ItemNotFoundException;
+import com.tw.biblioteca.exception.ReturnFailedException;
 import com.tw.biblioteca.model.Checkout;
 import com.tw.biblioteca.model.Item;
 import org.junit.Test;
@@ -13,7 +14,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.sql.Timestamp;
+
+import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,11 +66,11 @@ public class CheckoutServiceTest {
         checkoutService.insertCheckoutRecord("1234");
     }
 
-  /*  @Test
+   @Test(expected = ReturnFailedException.class)
     public void shouldReturnCheckoutBook() throws Exception {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, itemRepository);
         String checkout = "7c8f1879-61ed-4aa5-a903-d27b1faa994b";
-        checkoutService.returnCheckoutBook(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
+        checkoutService.returnCheckoutItem(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
         verify(checkoutRepository).updateDateOfReturnInCheckout(checkout);
     }
 
@@ -75,7 +80,7 @@ public class CheckoutServiceTest {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, itemRepository);
         Checkout checkout = new Checkout("7c8f1879-61ed-4aa5-a903-d27b1faa994b","20b5dcc0-3e2d-11e8-b566-0800200c9a66",
                 new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
-        assertFalse(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getBook_id()));
+        assertFalse(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getItem_id()));
 
     }
 
@@ -84,7 +89,7 @@ public class CheckoutServiceTest {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, itemRepository);
         Checkout checkout = new Checkout("b4f8f773-8aaa-43d6-bcb3-16f0ddd2d8f3","20b5dcc0-3e2d-11e8-b566-0800200c9a66",
                 new Timestamp(System.currentTimeMillis()),null);
-        assertTrue(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getBook_id()));
+        assertTrue(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getItem_id()));
 
     }
 
@@ -102,7 +107,7 @@ public class CheckoutServiceTest {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, itemRepository);
         Checkout checkout = new Checkout("7c8f1879-61ed-4aa5-a903-d27b1faa994b","20b5dcc0-3e2d-11e8-b566-0800200c9a66",
                 new Timestamp(System.currentTimeMillis()),null);
-        assertTrue(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getBook_id()));
+        assertTrue(checkoutService.isBookValidAndReturnAvailableForCheckout(checkout, checkout.getItem_id()));
 
     }
 
@@ -110,22 +115,22 @@ public class CheckoutServiceTest {
     public void shouldThrowErrorForIncorrectCheckoutBookId() throws Exception {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, itemRepository);
         String checkout = "7c8f1879-61ed-4aa5-a903-d27b1faa994b";
-        checkoutService.returnCheckoutBook(checkout,"123");
+        checkoutService.returnCheckoutItem(checkout,"123");
     }
 
     @Test(expected = ReturnFailedException.class)
     public void shouldThrowErrorForIncorrectCheckoutId() throws Exception {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, itemRepository);
         String checkout = "123";
-        checkoutService.returnCheckoutBook(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
+        checkoutService.returnCheckoutItem(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
     }
 
     @Test(expected = ReturnFailedException.class)
     public void shouldThrowErrorForAlreadyReturnedBook() throws Exception {
         CheckoutService checkoutService = new CheckoutService(checkoutRepository, itemRepository);
         String checkout = "7c8f1879-61ed-4aa5-a903-d27b1faa994b";
-        checkoutService.returnCheckoutBook(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
+        checkoutService.returnCheckoutItem(checkout,"20b5dcc0-3e2d-11e8-b566-0800200c9a66");
     }
-*/
+
 
 }

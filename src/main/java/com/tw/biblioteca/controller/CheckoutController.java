@@ -32,9 +32,9 @@ public class CheckoutController {
         return checkoutService.getAllCheckouts();
     }
 
-    /*@RequestMapping(value = "book/{bookId}/return/{checkoutId}/", method = RequestMethod.POST)
-    public String returnCheckoutBook(@PathVariable String checkoutId,@PathVariable String bookId) throws Exception {
-        checkoutService.returnCheckoutBook(checkoutId,bookId);
+    @RequestMapping(value = "item/{itemId}/return/{checkoutId}/", method = RequestMethod.POST)
+    public String returnCheckoutItem(@PathVariable String checkoutId,@PathVariable String itemId) throws Exception {
+        checkoutService.returnCheckoutItem(checkoutId,itemId);
         return "You returned your book successfully";
-    }*/
+    }
 }

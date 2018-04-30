@@ -47,7 +47,9 @@ public class CheckoutRepository {
                 .fetchInto(Checkout.class).size();
     }
 
-    /*public void updateDateOfReturnInCheckout(String checkoutId) {
+
+
+    public void updateDateOfReturnInCheckout(String checkoutId) {
         dsl.update(RepositoryConstants.CHECKOUT_TABLE)
                 .set(RepositoryConstants.CHECKOUT_DATE_OF_RETURN,new Timestamp(System.currentTimeMillis()))
                 .where(RepositoryConstants.CHECKOUT_ID.eq(checkoutId))
@@ -61,5 +63,5 @@ public class CheckoutRepository {
                 .fetchOne();
         return (record == null) ?  null :  record.into(Checkout.class);
     }
-*/
+
 }
